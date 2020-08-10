@@ -5,20 +5,18 @@ require_relative "lib/i18n/synchronizer/version"
 Gem::Specification.new do |spec|
   spec.name          = "i18n-synchronizer"
   spec.version       = I18n::Synchronizer::VERSION
-  spec.authors       = ["TODO: Write your name"]
-  spec.email         = ["TODO: Write your email address"]
+  spec.authors       = ["Damien DANGLARD"]
+  spec.email         = ["damien.danglard@kassylab.com"]
 
-  spec.summary       = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description   = "TODO: Write a longer description or delete this line."
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "Command line tools for synchronize localizations"
+  spec.description   = "This command line tools can synchronize localizations from Android and iOS project. All localization need to be stored in git repository."
+  spec.homepage      = "https://github.com/KassyLab"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/KassyLab/i18n-synchronizer.git"
+  spec.metadata["changelog_uri"] = "https://github.com/KassyLab/i18n-synchronizer/blob/master/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
