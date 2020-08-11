@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'i18n_synchronizer'
+
+I18nSynchronizer::Command.run ARGV

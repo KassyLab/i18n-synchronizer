@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in i18n-synchronizer.gemspec
+# Specify your gem's dependencies in i18n_synchronizer-synchronizer.gemspec
 gemspec
 
 gem "rake", "~> 13.0"

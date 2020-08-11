@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'i18n-synchronizer'
+gem 'i18n_synchronizer-synchronizer'
 ```
 
 And then execute:
