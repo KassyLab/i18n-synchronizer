@@ -26,5 +26,6 @@ Gem::Specification.new do |spec|
   spec.executables   = ["i18n-synchronizer"]
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency 'claide',                '>= 1.0.2', '< 2.0'
+  spec.add_runtime_dependency 'claide',                 '>= 1.0.2', '< 2.0'
+  spec.add_runtime_dependency 'yaml',                   '~> 0.1.0'
 end

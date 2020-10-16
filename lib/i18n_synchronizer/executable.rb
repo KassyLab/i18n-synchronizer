@@ -49,7 +49,7 @@ module I18nSynchronizer
       bin = which!(executable)
 
       command = command.map(&:to_s)
-      if File.basename(bin) == 'tar.exe'
+      if ::File.basename(bin) == 'tar.exe'
         # Tar on Windows needs --force-local
         command.push('--force-local')
       end
@@ -84,15 +84,15 @@ module I18nSynchronizer
     #
     def self.which(program)
       program = program.to_s
-      paths = ENV.fetch('PATH') { '' }.split(File::PATH_SEPARATOR)
+      paths = ENV.fetch('PATH') { '' }.split(::File::PATH_SEPARATOR)
       paths.unshift('./')
       paths.uniq!
       paths.each do |path|
-        bin = File.expand_path(program, path)
+        bin = ::File.expand_path(program, path)
         if Gem.win_platform?
           bin += '.exe'
         end
-        if File.file?(bin) && File.executable?(bin)
+        if ::File.file?(bin) && ::File.executable?(bin)
           return bin
         end
       end

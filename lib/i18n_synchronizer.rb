@@ -15,4 +15,6 @@ end
 require 'i18n_synchronizer/version'
 require 'i18n_synchronizer/executable'
 require 'i18n_synchronizer/configuration'
+require 'i18n_synchronizer/file'
+require 'i18n_synchronizer/helper/pull_helper'
 require 'i18n_synchronizer/command'

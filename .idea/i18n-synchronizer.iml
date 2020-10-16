@@ -30,5 +30,6 @@
     <orderEntry type="library" scope="PROVIDED" name="rubocop-ast (v0.3.0, rbenv: 2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-progressbar (v1.10.1, rbenv: 2.7.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="unicode-display_width (v1.7.0, rbenv: 2.7.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="yaml (v0.1.0, rbenv: 2.7.1) [gem]" level="application" />
   </component>
 </module>

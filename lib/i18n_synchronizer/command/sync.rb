@@ -39,14 +39,7 @@ module I18nSynchronizer
         clone_repo
         #checkout_branch
 
-        case @configuration.format
-        when "ios"
-          sync_ios
-        when "android"
-          sync_android
-        when "xliff", "xlf"
-          sync_xliff
-        end
+        I18nSynchronizer::Helper::PullHelper.run(@configuration, @dir)
       end
 
       private
@@ -80,52 +73,6 @@ module I18nSynchronizer
       #
       def checkout_branch
         Dir.chdir(@dir) { git!('checkout', @configuration.branch) } if @configuration.branch
-      end
-
-      def sync_android
-        raise InformativeError, "Synchronizing with Android format is not yet implemented"
-      end
-
-      def filter_pull_files
-        files = Dir.entries(@dir + "/l10n-yaml")
-                        .select { |entry| entry.end_with? ".l10n.yml" }
-                        .map { |entry| entry[..-10] }
-        pull_file_included = @configuration.pull.includes
-                                 .select { |include| include.type == "files" }
-                                 .map { |include| include.value }
-        pull_file_excluded = @configuration.pull.excludes
-                                 .select { |exclude| exclude.type == "files" }
-                                 .map { |exclude| exclude.value }
-        files.select! { |file| pull_file_included.include? file } unless pull_file_included.empty?
-        files.rejet! { |file| pull_file_excluded.include? file } unless pull_file_excluded.empty?
-
-        files
-      end
-
-      def sync_ios
-        files = filter_pull_files
-
-        pull_tags_included = @configuration.pull.includes
-                                 .select { |include| include.type == "tags" }
-                                 .map { |include| include.value }
-        pull_tags_excluded = @configuration.pull.excludes
-                                 .select { |exclude| exclude.type == "tags" }
-                                 .map { |exclude| exclude.value }
-
-        localizations = Hash.new
-        files.each do |file|
-          file_l10n = YAML.load_file("#{@dir}/l10n-yaml/#{file}.l10n.yml")
-          file_l10n.select! { |_, l10n| (pull_tags_included & l10n["tags"]).count == 1 } unless pull_tags_included.empty?
-          file_l10n.rejet! { |_, l10n| (pull_tags_excluded & l10n["tags"]).count == 1 } unless pull_tags_excluded.empty?
-          duplicated_keys = localizations.keys & file_l10n.keys
-          localizations.merge! file_l10n
-        end
-
-        puts localizations.map { |key, l10n| "\"#{key}\" = \"#{l10n['locales']['fr']}\";" }
-      end
-
-      def sync_xliff
-        raise InformativeError, "Synchronizing with XLIFF format is not yet implemented"
       end
     end
   end
