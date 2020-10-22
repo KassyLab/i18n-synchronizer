@@ -2,7 +2,10 @@ require 'yaml'
 
 module I18nSynchronizer
   class Configuration
-    attr_accessor :repository, :format, :include, :pull, :push
+    attr_accessor :repository, :format, :include, :push
+
+    # @return [Array<PullRequest>]
+    attr_accessor :pull
 
     def self.initialize_from_file
       config = new
@@ -11,61 +14,47 @@ module I18nSynchronizer
       config.repository = yml['repository']
       config.format = yml['format']
       config.include = yml['include']
-      if yml['pull'].kind_of?(Array)
-        config.pull = yml['pull'].map { |pull| PullConfiguration.new pull }
+      yml_pull = yml['pull']
+      if yml_pull.kind_of?(Array)
+        config.pull = yml_pull.map { |pull| build_pull_request pull }
       else
-        pull = PullConfiguration.new yml['pull']
-        config.pull = [pull]
+        config.pull = [build_pull_request(yml_pull)]
       end
-      config.push = PushConfiguration.new yml['push']
+      #config.push = PushConfiguration.new yml['push']
 
       config
     end
 
-    class PullCondition
+    # @param dictionary [Hash]
+    # @return [PullRequest]
+    def self.build_pull_request(dictionary)
+      tags = dictionary["tags"]
+      unless tags.kind_of?(Array)
+        tags = [tags]
+      end
+
+      PullRequest.new(dictionary["file"], tags, dictionary["into"])
+    end
+
+    class PullRequest
       # @return [String]
       attr_accessor :file
 
       # @return [Array<String>]
       attr_accessor :tags
 
-      def initialize(file, tags)
-        @file = file
-        @tags = tags
-      end
-    end
-
-    class PullConfiguration
       # @return [String]
       attr_accessor :into
 
-      # @return [Array<PullCondition>]
-      attr_accessor :includes
-
-      # @return [Array<PullCondition>]
-      attr_accessor :excludes
-
-      def initialize(dictionary)
-        @into = dictionary['into']
-        @includes = []
-        @excludes = []
-
-        @includes = build_conditions(dictionary['include']) if dictionary['include']
-        @excludes = build_conditions(dictionary['exclude']) if dictionary['exclude']
-      end
-
-      # @return [Array<PullCondition>]
-      def build_conditions(conditions)
-        pull_conditions = Array.new
-        conditions.each do |condition|
-          pull_conditions << PullCondition.new(condition['file'], condition['tags'])
-        end
-        pull_conditions
+      def initialize(file, tags, into)
+        @file = file
+        @tags = tags
+        @into = into
       end
     end
 
-    class PushConfiguration
-      def initialize(dictionary)
+    class PushRequest
+      def initialize()
 
       end
     end
